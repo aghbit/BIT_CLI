@@ -1,9 +1,10 @@
 import { promises as fs, existsSync as exists, writeFileSync as write} from 'fs'
 import { Task, SetOfTasks, Workspace } from "./classes";
 
-// Saves test results from class Task to csv at 'path' location.
+// Saves test results from class Task to csv at 'path' location and adds unix timestamp.
 // Set append to true to add new row to an existing file, or to false to overwrite existing file.
 export function save_task_to_csv(path: string, task: Task, append: boolean = true) {
+    let date: Date = new Date();
     const row: string = [
         task.taskNumber,
         task.setNumber,
@@ -11,13 +12,15 @@ export function save_task_to_csv(path: string, task: Task, append: boolean = tru
         task.noPassedTests,
         task.noFailedTests,
         task.noSkippedTests,
+        date.getTime()
     ].join(',')
 
     if(append && exists(path)) {
         fs.appendFile(path, row + "\n", 'utf8')
     }
     else {
-        const header: string = "taskNumber,setNumber,numberOfAllTests,numberOfPassedTests,numberOfFailedTests,numberOfSkippedTests\n"
+        const header: string =
+            "taskNumber,setNumber,numberOfAllTests,numberOfPassedTests,numberOfFailedTests,numberOfSkippedTests,unixTimestamp\n"
         write(path, '\ufeff' // byte order mark (BOM)
         + header // first line header
         + row // test data
