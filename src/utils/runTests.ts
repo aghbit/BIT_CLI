@@ -1,6 +1,5 @@
 import { exec } from "child_process"
 import { readdir, copyFile } from "fs"
-import { stderr } from "process"
 import { Task, SetOfTasks, Workspace } from "./classes"
 import { parsePytestOutput } from "./parser"
 import config from "./config.json"
@@ -18,7 +17,7 @@ export class Test {
 
         exec(`pytest --no-header ${testPath}`, (err, stdout, stderr) => {
             let result: Task = parsePytestOutput(err, stdout, stderr)
-            // Przekazanie result do save_to_scv.ts
+            // Do dopisania - przekazanie result do save_to_scv.ts
         })
     }
 
