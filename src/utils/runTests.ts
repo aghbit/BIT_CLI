@@ -15,7 +15,7 @@ export class Test {
 
         let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
 
-        exec(`pytest --no-header ${testPath}`, (err, stdout, stderr) => {
+        exec(`pytest -q --no-header ${testPath}`, (err, stdout, stderr) => {
             let result: Task = parsePytestOutput(err, stdout, stderr)
             result.setNumber = Number(set)
             result.taskNumber = Number(task)
