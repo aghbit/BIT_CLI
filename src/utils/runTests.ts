@@ -17,6 +17,8 @@ export class Test {
 
         exec(`pytest --no-header ${testPath}`, (err, stdout, stderr) => {
             let result: Task = parsePytestOutput(err, stdout, stderr)
+            result.setNumber = Number(set)
+            result.taskNumber = Number(task)
             // Do dopisania - przekazanie result do save_to_scv.ts
         })
     }
