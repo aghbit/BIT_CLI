@@ -1,26 +1,36 @@
 import { exec } from "child_process"
 import { readdir, copyFile } from "fs"
-import { Task, SetOfTasks, Workspace } from "./classes"
+import { Task } from "./classes"
+import { checkIfTestWasExecutedAfterLastEdit, insertTaskIntoCsv } from "./csv"
 import { parsePytestOutput } from "./parser"
 import config from "./config.json"
 
 export class Test {
     static testSingle(set: string, task: string): void {
-        // Do sprawdzenia czy test był wykonywany po ostatniej edycji
 
-        let userFile: string = `${config.path}/Workspace/Zestaw_${set}/t${task}`
-        let destFile: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}/prog.py`
+        const userFile: string = `${config.path}/Workspace/Zestaw_${set}/t_${task}.py`
+        const destFile: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}/prog.py`
 
-        copyFile(userFile, destFile, (err) => { if (err) throw err })
+        // ostatni argument to timestamp ostatniej edycji zadania
+        // należy zczytać timestamp z właściwości pliku userFile i przekazać wartość jako 3. argument
+        // (tutaj przekazana bardzo duża liczba w celu testowania tak aby funkcja zawsze zwracała false)
+        //                                                            ||
+        //                                                            ||
+        //                                                            \/
+        if (checkIfTestWasExecutedAfterLastEdit(set, task, 166381175840090534744444) === false) {
 
-        let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
+            copyFile(userFile, destFile, (err) => { if (err) throw err })
 
-        exec(`pytest -q --no-header ${testPath}`, (err, stdout, stderr) => {
-            let result: Task = parsePytestOutput(err, stdout, stderr)
-            result.setNumber = Number(set)
-            result.taskNumber = Number(task)
-            // Do dopisania - przekazanie result do save_to_scv.ts
-        })
+            let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
+
+            exec(`pytest -q --no-header ${testPath}`, (err, stdout, stderr) => {
+                let result: Task = parsePytestOutput(err, stdout, stderr)
+                result.setNumber = Number(set)
+                result.taskNumber = Number(task)
+
+                insertTaskIntoCsv(result) // Zapis do pliku csv
+            })
+        }
     }
 
     static testSet(set: string): void {
