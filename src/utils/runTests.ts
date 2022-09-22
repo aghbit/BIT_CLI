@@ -1,5 +1,5 @@
 import { exec } from "child_process"
-import { readdir, copyFile } from "fs"
+import { readdir, copyFile, statSync } from "fs"
 import { Task } from "./classes"
 import { checkIfTestWasExecutedAfterLastEdit, insertTaskIntoCsv } from "./csv"
 import { parsePytestOutput } from "./parser"
@@ -10,14 +10,9 @@ export class Test {
 
         const userFile: string = `${config.path}/Workspace/Zestaw_${set}/t_${task}.py`
         const destFile: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}/prog.py`
+        const editTime: number = statSync(userFile).mtimeMs
 
-        // ostatni argument to timestamp ostatniej edycji zadania
-        // należy zczytać timestamp z właściwości pliku userFile i przekazać wartość jako 3. argument
-        // (tutaj przekazana bardzo duża liczba w celu testowania tak aby funkcja zawsze zwracała false)
-        //                                                            ||
-        //                                                            ||
-        //                                                            \/
-        if (checkIfTestWasExecutedAfterLastEdit(set, task, 166381175840090534744444) === false) {
+        if (checkIfTestWasExecutedAfterLastEdit(set, task, editTime) === false) {
 
             copyFile(userFile, destFile, (err) => { if (err) throw err })
 
@@ -25,8 +20,9 @@ export class Test {
 
             exec(`pytest -q --no-header ${testPath}`, (err, stdout, stderr) => {
                 let result: Task = parsePytestOutput(err, stdout, stderr)
-                result.setNumber = Number(set)
-                result.taskNumber = Number(task)
+                
+                result.setNumber = set
+                result.taskNumber = task
 
                 insertTaskIntoCsv(result) // Zapis do pliku csv
             })
