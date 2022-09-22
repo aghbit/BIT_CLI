@@ -14,7 +14,11 @@ export class Test {
 
         if (checkIfTestWasExecutedAfterLastEdit(set, task, editTime) === false) {
 
-            copyFile(userFile, destFile, (err) => { if (err) throw err })
+            copyFile(userFile, destFile, (err) => {
+                if (err) {
+                    console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
+                }
+            })
 
             let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
 
