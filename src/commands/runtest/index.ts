@@ -4,7 +4,7 @@ import { Test } from "../../utils/runTests"
 
 export default class Runtest extends Command {
     static flags = {
-        set: Flags.string({ char: 's', description: 'Set to test', required: true }),
+        set: Flags.string({ char: 's', description: 'Set to test' }),
         task: Flags.string({ char: 't', description: 'Task to test', dependsOn: ['set'] })
     }
 
