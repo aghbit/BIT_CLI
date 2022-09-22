@@ -1,3 +1,6 @@
 {
-    "path": "/absolute/path/to/project"
+    "path": "/absolute/path/to/project",
+
+    "csvFileLocation": "/absolute/path/to/file.csv",
+    "csvFirstLineHeader": false
 }
