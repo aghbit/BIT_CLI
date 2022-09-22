@@ -48,7 +48,7 @@ export class Test {
         readdir(`${config.path}/WDI`, (err, files) => {
             files.forEach(file => {
                 if (file.slice(0, 6) === 'Zestaw') {
-                    let set = file.slice(-2)
+                    let set = file.slice(-1)
                     Test.testSet(set)
                 }
             })
