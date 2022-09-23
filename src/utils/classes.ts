@@ -22,4 +22,8 @@ export class Task {
             this.noFailedTests = noFailedTests
             this.noSkippedTests = noSkippedTests
     }
+
+    displayContent(): void { 
+        console.log( `Zestaw ${this.setNumber} Zadanie ${this.taskNumber}: Zaliczonych ${this.noPassedTests} na ${this.noAllTests} testów (${this.noFailedTests} niezdanych i ${this.noSkippedTests} pominiętych)` )
+    }
 }

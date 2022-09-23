@@ -29,6 +29,7 @@ export class Test {
                 result.taskNumber = task
 
                 insertTaskIntoCsv(result) // Zapis do pliku csv
+                result.displayContent()
             })
         }
     }
