@@ -2,5 +2,6 @@
     "path": "/absolute/path/to/project",
 
     "csvFileLocation": "/absolute/path/to/file.csv",
-    "csvFirstLineHeader": false
+    "csvFirstLineHeader": false,
+    "csvSaveInOrder": true
 }
