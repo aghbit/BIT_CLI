@@ -1,5 +1,6 @@
 import { Command, Flags } from "@oclif/core"
-import config from "../../utils/config.json"
+import { readFileSync, writeFileSync } from "fs"
+import { resolve as resolvePath } from "path"
 
 
 export default class Config extends Command {
@@ -13,11 +14,15 @@ export default class Config extends Command {
         csvSaveInOrder: Flags.boolean({
             allowNo: true, description:
                 'Define if test results are recorded in numerical order. True by default. Use "--no-csvSaveInOrder" to switch to false. When false, test results are ordered by time of completion'
-        })
+        }),
+        display: Flags.boolean({ char: 'd', description: 'Display contents of the config file' })
     }
 
     async run() {
         const { flags } = await this.parse(Config)
+
+        // W teorii powinienem zrobić interfejs dla typu Config, ale nie jest to tutaj raczej konieczne, więc daję typ any
+        const config: any = JSON.parse(readFileSync(resolvePath(__dirname, "../../utils/config.json"), "utf-8"))
 
         if (flags.path) {
             config.path = flags.path
@@ -31,5 +36,10 @@ export default class Config extends Command {
         if (flags.csvSaveInOrder === true || flags.csvSaveInOrder === false) {  // Jak wyżej
             config.csvSaveInOrder = flags.csvFirstLineHeader
         }
+        if (flags.display) {
+            console.log(config)
+        }
+
+        writeFileSync(resolvePath(__dirname, "../../utils/config.json"), JSON.stringify(config))
     }
 }
