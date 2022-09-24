@@ -5,7 +5,10 @@ import { Test } from "../../utils/runTests"
 export default class Runtest extends Command {
     static flags = {
         set: Flags.string({ char: 's', description: 'Set to test' }),
-        task: Flags.string({ char: 't', description: 'Task to test', dependsOn: ['set'] })
+        task: Flags.string({ char: 't', description: 'Task to test', dependsOn: ['set'] }),
+        display: Flags.boolean({ char: 'd', description: 'Display test results in terminal', default: false }),
+        force: Flags.boolean({ char: 'f', description: 'Force test execution regardless of whether user file was edited since last test.', default: false }),
+        // ^ w readme było nazwane ignoreEditTime, uznałem że lepiej dać krótką (i dosyć standardową) nazwę flagi, w razie czego zajrzą do --help
     }
 
     async run() {
@@ -15,12 +18,12 @@ export default class Runtest extends Command {
             if (flags.task) {
                 let task: string = flags.task
                 if (task.length === 1) task = "0" + flags.task
-                Test.testSingle(flags.set, task)
+                Test.testSingle(flags.set, task, flags.display, flags.force)
             } else {
-                Test.testSet(flags.set)
+                Test.testSet(flags.set, flags.display, flags.force)
             }
         } else {
-            Test.testAll()
+            Test.testAll(flags.display, flags.force)
         }
     }
 }
