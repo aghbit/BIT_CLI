@@ -7,8 +7,7 @@ export default class Runtest extends Command {
         set: Flags.string({ char: 's', description: 'Set to test' }),
         task: Flags.string({ char: 't', description: 'Task to test', dependsOn: ['set'] }),
         display: Flags.boolean({ char: 'd', description: 'Display test results in terminal', default: false }),
-        force: Flags.boolean({ char: 'f', description: 'Force test execution regardless of whether user file was edited since last test.', default: false }),
-        // ^ w readme było nazwane ignoreEditTime, uznałem że lepiej dać krótką (i dosyć standardową) nazwę flagi, w razie czego zajrzą do --help
+        force: Flags.boolean({ char: 'f', description: 'Force test execution regardless of whether user file was edited since last test.', default: false })
     }
 
     async run() {
