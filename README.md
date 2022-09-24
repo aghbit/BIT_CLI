@@ -19,9 +19,7 @@ Na tym etapie komenda docelowa działa i w pełni realizuje swoje zadanie odpale
 - runTests.ts - naprawa funkcji kopiującej plik użytkownika, tak aby nie wywalała się gdy plik nie istnieje
 - parser.ts - wyłapywanie i obsługa błędów zwracanych przez pytest, poprawienia tymczasowego if(true) na coś innego
 - dodatkowe flagi komendy runtest (nazwy są jedynie moją propozycją, mogą być inne)
-  - --display - wyświetla wyniki testów w terminalu (domyślnie nie wyświetla)
   - --skipNotExisting - podczas testowania pomija nieistniejące pliki użytkownika (domyślnie testuje wszystko co zostało przekazane w argumencie komendy, dla nieistniejącego pliku output taki sam jak dla istniejącego pliku z pustą funkcją)
-  - --ignoreEditTime - forsuje testowanie niezależnie od tego czy test już został wykonany po edycji pliku użytkownika czy nie
 - nowa komenda do ustawiania wartości w config.json
 - ?proste okienko do wyświetlania wyników testów?
 
