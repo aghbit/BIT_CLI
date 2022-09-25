@@ -9,11 +9,11 @@ export default class Config extends Command {
         csvFileLocation: Flags.string({ description: 'Define absolute path to CSV file that records test results' }),
         csvFirstLineHeader: Flags.boolean({
             allowNo: true, description:
-                'Define if the CSV file has a header line. False by deafult. Use "--no-csvFirstLineHeader" to switch to false'
+                'Define if the CSV file has a header line. False by deafult.'
         }),
         csvSaveInOrder: Flags.boolean({
             allowNo: true, description:
-                'Define if test results are recorded in numerical order. True by default. Use "--no-csvSaveInOrder" to switch to false. When false, test results are ordered by time of completion'
+                'Define if test results are recorded in numerical order. True by default. Use "--no-csvSaveInOrder" to switch to false.'
         }),
         display: Flags.boolean({ char: 'd', description: 'Display contents of the config file' })
     }
