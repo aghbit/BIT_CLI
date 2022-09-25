@@ -34,7 +34,7 @@ export default class Config extends Command {
             config.csvFirstLineHeader = flags.csvFirstLineHeader
         }
         if (flags.csvSaveInOrder === true || flags.csvSaveInOrder === false) {  // Jak wyżej
-            config.csvSaveInOrder = flags.csvFirstLineHeader
+            config.csvSaveInOrder = flags.csvSaveInOrder
         }
         if (flags.display) {
             console.log(config)
