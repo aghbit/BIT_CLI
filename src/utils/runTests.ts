@@ -23,8 +23,33 @@ export class Test {
             let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
 
             exec(`pytest -q --no-header ${testPath}`, (err, stdout, stderr) => {
-                let result: Task = parsePytestOutput(err, stdout, stderr)
-                
+                let result: Task = new Task()
+
+                try {
+                    result = parsePytestOutput(err, stdout, stderr)
+                } catch (error: any) {
+                    switch(error.message) {
+                        case "INTERRUPTED":
+                            console.log(`Test execution interrupted while testing set ${set} task ${task}.\n`)
+                            break
+                        
+                        case "INTERNAL_ERROR":
+                            console.log(`Internal pytest error while testing set ${set} task ${task}.\n`)
+                            break
+
+                        case "USAGE_ERROR": // Nie powinno nigdy wyskakiwać, bo to my wywołujemy pytest
+                            console.log(`Pytest was misused while testing set ${set} task ${task}.\n`)
+                            break
+
+                        case "NO_TESTS_COLLECTED":
+                            console.log(`No tests found at ${testPath}. Please make sure the project is set up correctly.\n`)
+                            break
+
+                        default:
+                            throw error
+                    }
+                }
+
                 result.setNumber = set
                 result.taskNumber = task
 
