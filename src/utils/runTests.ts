@@ -13,12 +13,19 @@ export class Test {
         const editTime: number = statSync(userFile).mtimeMs
 
         if (checkIfTestWasExecutedAfterLastEdit(set, task, editTime) === false || force) {
-
-            copyFile(userFile, destFile, (err) => {
-                if (err) {
-                    console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
+            try {
+                copyFile(userFile, destFile, (err) => {
+                    if (err) {
+                        console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
+                    }
+                })
+            } catch (err: any) {
+                if (err.code === 'ENOENT') {
+                    console.log(`File not found at ${userFile}.\n`)
+                } else {
+                    throw err
                 }
-            })
+            }
 
             let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
 
