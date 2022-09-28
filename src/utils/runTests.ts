@@ -25,8 +25,8 @@ export class Test {
 
         if (checkIfTestWasExecutedAfterLastEdit(set, task, editTime) === false || force) {
             copyFile(userFile, destFile, (err) => {
-                if (err) {
-                    console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
+                if (err && err.code !== 'ENOENT') {
+                    throw err
                 }
             })
 
