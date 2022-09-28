@@ -18,7 +18,6 @@ Na tym etapie komenda docelowa działa i w pełni realizuje swoje zadanie odpale
 
 
 ## Do zrobienia:
-- runTests.ts - naprawa funkcji kopiującej plik użytkownika, tak aby nie wywalała się gdy plik nie istnieje
 - dodatkowe flagi komendy runtest (nazwy są jedynie moją propozycją, mogą być inne)
   - --skipNotExisting - podczas testowania pomija nieistniejące pliki użytkownika (domyślnie testuje wszystko co zostało przekazane w argumencie komendy, dla nieistniejącego pliku output taki sam jak dla istniejącego pliku z pustą funkcją)
 
