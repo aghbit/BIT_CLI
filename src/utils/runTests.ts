@@ -10,22 +10,25 @@ export class Test {
 
         const userFile: string = `${config.path}/Workspace/Zestaw_${set}/t_${task}.py`
         const destFile: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}/prog.py`
-        const editTime: number = statSync(userFile).mtimeMs
+
+        let now: Date = new Date()
+        let editTime: number = now.getTime()
+        try {
+            editTime = statSync(userFile).mtimeMs
+        } catch (err: any) {
+            if (err.code === 'ENOENT') {
+                console.log(`File not found at ${userFile}.\n`)
+            } else {
+                throw err
+            }
+        }
 
         if (checkIfTestWasExecutedAfterLastEdit(set, task, editTime) === false || force) {
-            try {
-                copyFile(userFile, destFile, (err) => {
-                    if (err) {
-                        console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
-                    }
-                })
-            } catch (err: any) {
-                if (err.code === 'ENOENT') {
-                    console.log(`File not found at ${userFile}.\n`)
-                } else {
-                    throw err
+            copyFile(userFile, destFile, (err) => {
+                if (err) {
+                    console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
                 }
-            }
+            })
 
             let testPath: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}`
 
