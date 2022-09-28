@@ -10,13 +10,23 @@ export class Test {
 
         const userFile: string = `${config.path}/Workspace/Zestaw_${set}/t_${task}.py`
         const destFile: string = `${config.path}/WDI/Zestaw_${set}/Zadanie_${task}/prog.py`
-        const editTime: number = statSync(userFile).mtimeMs
+
+        let now: Date = new Date()
+        let editTime: number = now.getTime()
+        try {
+            editTime = statSync(userFile).mtimeMs
+        } catch (err: any) {
+            if (err.code === 'ENOENT') {
+                console.log(`File not found at ${userFile}.`)
+            } else {
+                throw err
+            }
+        }
 
         if (checkIfTestWasExecutedAfterLastEdit(set, task, editTime) === false || force) {
-
             copyFile(userFile, destFile, (err) => {
-                if (err) {
-                    console.log(`Error while trying to access user's file at ${userFile}. Please check if the file exists.\n`)
+                if (err && err.code !== 'ENOENT') {
+                    throw err
                 }
             })
 
@@ -30,19 +40,19 @@ export class Test {
                 } catch (error: any) {
                     switch(error.message) {
                         case "INTERRUPTED":
-                            console.log(`Test execution interrupted while testing set ${set} task ${task}.\n`)
+                            console.log(`Test execution interrupted while testing set ${set} task ${task}.`)
                             break
                         
                         case "INTERNAL_ERROR":
-                            console.log(`Internal pytest error while testing set ${set} task ${task}.\n`)
+                            console.log(`Internal pytest error while testing set ${set} task ${task}.`)
                             break
 
                         case "USAGE_ERROR": // Nie powinno nigdy wyskakiwać, bo to my wywołujemy pytest
-                            console.log(`Pytest was misused while testing set ${set} task ${task}.\n`)
+                            console.log(`Pytest was misused while testing set ${set} task ${task}.`)
                             break
 
                         case "NO_TESTS_COLLECTED":
-                            console.log(`No tests found at ${testPath}. Please make sure the project is set up correctly.\n`)
+                            console.log(`No tests found at ${testPath}. Please make sure the project is set up correctly.`)
                             break
 
                         default:
