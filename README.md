@@ -1,28 +1,3 @@
-# Rzeczy zrobione i do zrobienia
-
-
-## Zrobione:
-- komenda "runtest" z możliwością przetestowania pojedyńczego zadania, całego zestawu jak i całego workspace'u
-- flagi do komendy "runtest": -d (wyświetlanie w terminalu) i -f (forsowanie testu)
-- config.json - plik konfiguracyjny
-- komenda "runtest config" do edytownania i wyświetlania zawartości pliku config.json przez użytkownika
-- kopiowanie pliku użytkownika do prog.py
-- sprawdzanie daty edycji pliku użytkownika i porównywanie z datą ostatnio odpalonego testu
-- obsługa stdout pytest'a
-- zapis wyników testowania do klasy Task
-- zapis daty wykonania testu
-- zapis wyników do pliku .csv z opcjami headera jako pierwszej linijki i możliwością zapisu zgodnie z kolejnością zadań
-- wyświetlenie wyników w terminalu
-
-Na tym etapie komenda docelowa działa i w pełni realizuje swoje zadanie odpalenia testów, zebrania wyników, zapisu do csv i wyświetlenia w terminalu
-
-
-## Do zrobienia:
-- dodatkowe flagi komendy runtest (nazwy są jedynie moją propozycją, mogą być inne)
-  - --skipNotExisting - podczas testowania pomija nieistniejące pliki użytkownika (domyślnie testuje wszystko co zostało przekazane w argumencie komendy, dla nieistniejącego pliku output taki sam jak dla istniejącego pliku z pustą funkcją)
-
-
-# Poniżej informacje dla użytkownika końcowego
 # Struktura projektu
 
 
