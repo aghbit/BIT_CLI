@@ -29,7 +29,7 @@ Przed rozpoczęciem pisania rozwiązań do zadań należy skonfigurować plik co
 # Opis komend
 
 
-## Komenda "runtest config":
+## Komenda "runtest config"
 ## UWAGA! Przeczytaj uwagę znajdującą się pod tą sekcją!
 - flaga '-p' ustawia ścieżkę bezwględną do projektu
   - np. "runtest config -p C:/Users/Marek/Desktop/Zadania"
@@ -63,7 +63,7 @@ Przed rozpoczęciem pisania rozwiązań do zadań należy skonfigurować plik co
 - WDI - folder gdzie zawarte są rozwiązania zadań
 
 
-## Struktura folderu "Workspace":
+## Struktura folderu "Workspace"
 - Zestaw_1
   - t_01.py
   - t_02.py <- plik zawierający rozwiązanie UŻYTKOWNIKA do zadania 2 z zestawu 1
@@ -74,7 +74,7 @@ Przed rozpoczęciem pisania rozwiązań do zadań należy skonfigurować plik co
 - Zestaw_6
 
 
-## Struktura folderu "WDI" (taka sama jak w SummerProject2022):
+## Struktura folderu "WDI" (taka sama jak w SummerProject2022)
 - Zestaw_1
   - Zadanie_01
       - __init__.py 
